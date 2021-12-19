@@ -17,43 +17,52 @@ msg_[10] = "You guessed the word {}!"
 msg_[11] = "You should input a single letter"
 msg_[12] = "You've already guessed this letter"
 msg_[13] = "Please enter a lowercase English letter"
+msg_[14] = 'Type "play" to play the game, "exit" to quit:'
 # msg_[1] = ""
 
 sekret_list = ['python', 'java', 'kotlin', 'javascript']
 sekret = sekret_list[randrange(len(sekret_list))]
 letters = set()
 print(msg_[0])
-# print(msg_[2].format(sekret[:3] + "-" * (len(sekret) - 3)))
 
-step = 8
-while step > 0 and not set(sekret).issubset(letters):
-    vis = ""
-    for s in sekret:
-        vis += s if s in letters else "-"
+while 1:
+    mode = input(msg_[14]).lower()
+    if mode == "exit":
+        break
+    if mode != "play":
+        continue
+    
+
+    step = 8
+    while step > 0 and not set(sekret).issubset(letters):
+        vis = ""
+        for s in sekret:
+            vis += s if s in letters else "-"
+        print()
+        print(vis)
+        # print(step)
+        i = input(msg_[5])
+        if len(i) != 1:
+            print(msg_[11])
+            continue
+        elif i not in ascii_lowercase:
+            print(msg_[13])
+            continue
+
+        elif i in letters:
+            print(msg_[12])
+            continue
+
+        letters.add(i)
+        if i not in sekret:
+            step -= 1
+            print(msg_[6])
+            
+    if set(sekret).issubset(letters):
+        print(msg_[10].format(sekret))
+        print(msg_[3])
+    else:
+        print(msg_[4])
     print()
-    print(vis)
-    # print(step)
-    i = input(msg_[5])
-    if len(i) != 1:
-        print(msg_[11])
-        continue
-    elif i not in ascii_lowercase:
-        print(msg_[13])
-        continue
-
-    elif i in letters:
-        print(msg_[12])
-        continue
-
-    letters.add(i)
-    if i not in sekret:
-        step -= 1
-        print(msg_[6])
-        
-if set(sekret).issubset(letters):
-    print(msg_[10].format(sekret))
-    print(msg_[3])
-else:
-    print(msg_[4])
 
 # -----------
